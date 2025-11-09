@@ -1,0 +1,51 @@
+class HashTableChaining:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+
+    def hash_function(self, key):
+        return key % self.size
+
+    def insert(self, key, value):
+        index = self.hash_function(key)
+        for pair in self.table[index]:
+            if pair[0] == key:
+                pair[1] = value
+                print(f"Updated key {key} with value '{value}'")
+                return
+        self.table[index].append([key, value])
+        print(f"Inserted ({key}, {value})")
+
+    def search(self, key):
+        index = self.hash_function(key)
+        for pair in self.table[index]:
+            if pair[0] == key:
+                print(f"Found: {pair}")
+                return pair[1]
+        print("Key not found.")
+        return None
+
+    def delete(self, key):
+        index = self.hash_function(key)
+        for i, pair in enumerate(self.table[index]):
+            if pair[0] == key:
+                del self.table[index][i]
+                print(f"Deleted key {key}")
+                return
+        print("Key not found.")
+
+    def display(self):
+        print("\nHash Table:")
+        for i in range(self.size):
+            print(f"Index {i}: {self.table[i]}")
+
+
+# --- Example usage ---
+h = HashTableChaining()
+h.insert(12, "Apple")
+h.insert(22, "Banana")
+h.insert(32, "Cherry")
+h.display()
+h.search(22)
+h.delete(22)
+h.display()
