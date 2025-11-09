@@ -1,0 +1,36 @@
+from collections import deque
+
+class CallCenterQueue:
+    def __init__(self):
+        self.queue = deque()
+
+    def addCall(self, customerID, callTime):
+        self.queue.append({"CustomerID": customerID, "CallTime": callTime})
+        print(f"Call from Customer {customerID} added (Time: {callTime} mins).")
+
+    def answerCall(self):
+        if self.isQueueEmpty():
+            print("No calls to answer.")
+        else:
+            call = self.queue.popleft()
+            print(f"Answered call from Customer {call['CustomerID']} (Time: {call['CallTime']} mins).")
+
+    def viewQueue(self):
+        if self.isQueueEmpty():
+            print("No calls in queue.")
+        else:
+            print("\nCurrent Calls in Queue:")
+            for call in self.queue:
+                print(f"CustomerID: {call['CustomerID']}, CallTime: {call['CallTime']} mins")
+
+    def isQueueEmpty(self):
+        return len(self.queue) == 0
+
+
+# --- Example usage ---
+call_center = CallCenterQueue()
+call_center.addCall(101, 5)
+call_center.addCall(102, 3)
+call_center.viewQueue()
+call_center.answerCall()
+call_center.viewQueue()
