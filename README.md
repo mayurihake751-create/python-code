@@ -1,1 +1,54 @@
 # python-code
+class HashTableLinearProbing:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [None] * size
+
+    def hash_function(self, key):
+        return key % self.size
+
+    def insert(self, key):
+        index = self.hash_function(key)
+        start = index
+        while self.table[index] is not None:
+            index = (index + 1) % self.size
+            if index == start:
+                print("Hash table full!")
+                return
+        self.table[index] = key
+        print(f"Inserted key {key}")
+
+    def search(self, key):
+        index = self.hash_function(key)
+        start = index
+        while self.table[index] is not None:
+            if self.table[index] == key:
+                print(f"Key {key} found at index {index}")
+                return index
+            index = (index + 1) % self.size
+            if index == start:
+                break
+        print("Key not found.")
+        return None
+
+    def delete(self, key):
+        index = self.search(key)
+        if index is not None:
+            self.table[index] = None
+            print(f"Deleted key {key}")
+
+    def display(self):
+        print("\nHash Table:")
+        for i, val in enumerate(self.table):
+            print(f"Index {i}: {val}")
+
+
+# --- Example usage ---
+h = HashTableLinearProbing()
+h.insert(12)
+h.insert(22)
+h.insert(32)
+h.display()
+h.search(22)
+h.delete(22)
+h.display()
